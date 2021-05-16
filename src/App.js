@@ -1,7 +1,8 @@
+import { useState } from "react";
 import "./styles.css";
 
 function allowDrop(ev) {
-  console.log();
+  console.log("allow drop " + ev);
   ev.preventDefault();
 }
 
@@ -13,8 +14,8 @@ function drag(ev) {
 function drop(ev) {
   ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
+  setFunc(ev.target.id);
   console.log("" + data + " to " + ev.target.id);
-  //    ev.target.appendChild(document.getElementById(data));
 }
 
 function DropZone(props) {
@@ -29,34 +30,45 @@ function DropZone(props) {
   );
 }
 
+function DropElement(props) {
+  const { name, text } = props;
+
+  return (
+    <div
+      className="me"
+      id={name}
+      draggable={true}
+      onDragStart={(event) => drag(event)}
+    >
+      {text}
+    </div>
+  );
+}
+
 export default function App() {
   const divs = ["div1", "div2", "div3"];
+
+  const [h, setH] = useState("div1");
+  const [b, setB] = useState("div2");
 
   return (
     <div className="App">
       <h1>Hello CodeSandbox</h1>
 
-      {divs.map((x) => (
-        <DropZone did={x}>y</DropZone>
+      {divs.map((divId) => (
+        <DropZone did={divId}>
+          {divId === h && <DropElement name="h" text="Hello" />}
+          {divId === b && <DropElement name="b" text="Bye" />}
+        </DropZone>
       ))}
 
-      <div
-        id="div1"
-        ondrop={(event) => drop(event)}
-        ondragover={(event) => allowDrop(event)}
-      >
+      <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
         <div
           className="me"
-          id="h"
-          draggable={true}
-          ondragstart={(event) => drag(event)}
+          id="b"
+          draggable="true"
+          onDragStart={(event) => drag(event)}
         >
-          Hello
-        </div>
-      </div>
-
-      <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <div className="me" id="b" draggable="true" ondragstart="drag(event)">
           Bye
         </div>
       </div>
