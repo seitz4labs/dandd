@@ -5,7 +5,7 @@
 .me {
   background-color: red;
 }
-#div1, #div2, #div3 {
+.dropzone {
   float: left;
   width: 100px;
   height: 35px;

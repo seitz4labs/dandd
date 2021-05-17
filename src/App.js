@@ -28,11 +28,14 @@ function DropZone(props) {
 
   return (
     <div
-      id={dId}
+      className="dropzone"
       onDrop={(event) => drop(event, dId, fB, fH)}
       onDragOver={(event) => allowDrop(event)}
     >
-      {children}
+      <>
+        {dId}
+        {children}
+      </>
     </div>
   );
 }
@@ -53,7 +56,12 @@ function DropElement(props) {
 }
 
 export default function App() {
-  const divs = ["div1", "div2", "div3"];
+  const divs = ["div1", "div2", "div3", "div4"];
+
+  const data = [
+    { name: "h", text: "Hellos" },
+    { name: "b", text: "Byes" }
+  ];
 
   const [h, setH] = useState("div1");
   const [b, setB] = useState("div2");
